@@ -1,14 +1,19 @@
-/*------------------------------------------------------------------------------------------ 
+/*---------------------------------------------------------------------------------------- 
 Copyright 2014, Celeste Gabriela Guagliano. 
 
 This file is part of DXF2Machine project. 
 
-DXF2Machine is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License. 
+DXF2Machine is free software: you can redistribute it and/or modify it under the terms of 
+the GNU General Public License as published by the Free Software Foundation, either 
+version 2 of the License. 
 
-DXF2Machine is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+DXF2Machine is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+See the GNU General Public License for more details. 
 
-You should have received a copy of the GNU General Public License along with DXF2Machine. If not, see <http://www.gnu.org/licenses/>.
-  --------------------------------------------------------------------------------------------*/
+You should have received a copy of the GNU General Public License along with DXF2Machine. 
+If not, see <http://www.gnu.org/licenses/>.
+  ----------------------------------------------------------------------------------------*/
 
 package cggColeccion;
 
@@ -644,6 +649,34 @@ public class ColeccionFunciones {
 			comparten = true;
 		}
 		return comparten;
+	}
+	
+	
+	public static Coordenadas ObtenerCoordenadaCoincidenteArco(datos elemento1, datos elemento2) {
+		//TODO chequea si dos elementos comparten coordenadas.		
+		double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+		x1 = elemento1.FinalX;
+		y1 = elemento1.FinalY;
+		Coordenadas compartidas=new Coordenadas(0,0);
+		if(x1==elemento2.ComienzoX&&y1==elemento2.ComienzoY){
+			compartidas=new Coordenadas(x1,y1);
+		}else{
+			if(x1==elemento2.FinalX&&y1==elemento2.FinalY){
+				compartidas=new Coordenadas(x1,y1);
+			}else{
+				x1=elemento1.ComienzoX;
+				y1=elemento1.ComienzoY;
+				if(x1==elemento2.ComienzoX&&y1==elemento2.ComienzoY){
+						compartidas=new Coordenadas(x1,y1);
+					}else{
+						if(x1==elemento2.FinalX&&y1==elemento2.FinalY){
+							compartidas=new Coordenadas(x1,y1);
+						}
+				}
+		}
+	}
+					
+	return compartidas;
 	}
 
 	/** Method to remove unneeded elements of a list. 
