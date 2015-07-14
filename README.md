@@ -1,5 +1,5 @@
 # DXF2Machine
-This project is a fork from DXF project. DXF files can translate into machine code.
+This project is a fork from DXF project. DXF2Machines translates DXF files into machine code.
 
    Copyright 2014, Celeste Gabriela Guagliano. 
 
@@ -22,6 +22,6 @@ This project is a fork from DXF project. DXF files can translate into machine co
 
 
     This program uses files, and modified versions from DXF project 
-    Copyright 2007-2009, Marc Paris, Stephan Soulard and Edouard 
+    Copyright 2007, Stephan Soulard and Edouard 
     Vanhauwaert. In this same folder folder you can find the original
     complete text of the DXF License in DXF_License.txt file.
