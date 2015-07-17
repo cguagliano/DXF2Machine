@@ -199,13 +199,6 @@ public class compensacionContorno {
 			EcuacionCircunferencia ecuacion2, DatosArcos elemento2, double angulo) {
 		Coordenadas interseccion=new Coordenadas(0,0);
 		Coordenadas finArco=ColeccionFunciones.ObtenerCoordenadaFinEntidad(elemento2);
-/*		if(ecuacion1.A==0){
-			interseccion=intersectarArcoConRectaHorizontal(ecuacion1,ecuacion2,finArco);
-		}else if(ecuacion1.B==0){
-			interseccion=intersectarArcoConRectaVertical(ecuacion1,ecuacion2,finArco);
-		}else{
-			interseccion=intersectarRectaConArcoCasoGeneral(ecuacion1,ecuacion2,finArco);
-		}*/
 		boolean tangente=RectaEsTangenteAlArco(ecuacion1,ecuacion2);
 		if(tangente==true){
 			interseccion=calcularNuevoPuntoDeIntersección(ecuacion2,angulo);
@@ -260,13 +253,6 @@ public class compensacionContorno {
 	    EcuacionCircunferencia ecuacion2, DatosArcos elemento2, double angulo) {
 		Coordenadas interseccion=new Coordenadas(0,0);
 		Coordenadas inicioArco=ColeccionFunciones.ObtenerCoordenadaInicioEntidad(elemento2);
-	/*	if(ecuacion1.A==0){
-			interseccion=intersectarArcoConRectaHorizontal(ecuacion1,ecuacion2,inicioArco);
-		}else if(ecuacion1.B==0){
-			interseccion=intersectarArcoConRectaVertical(ecuacion1,ecuacion2,inicioArco);
-		}else{
-			interseccion=intersectarRectaConArcoCasoGeneral(ecuacion1,ecuacion2,inicioArco);
-		}*/
 		boolean tangente=RectaEsTangenteAlArco(ecuacion1,ecuacion2);
 		if(tangente==true){
 			interseccion=calcularNuevoPuntoDeIntersección(ecuacion2,angulo);
@@ -277,118 +263,7 @@ public class compensacionContorno {
 		}
 }
 	
-	/** Method to calculate the point of intersection between a line and a circumference.
-	 * @param ecuacion1 is the line's equation.
-	 * @param ecuacion2 is the circumference's equation.
-	 * @param elemento2 is the Arc's data.
-	 * @return a point.
-	 */
-		private static Coordenadas intersectarRectaConArcoCasoGeneral(
-			EcuacionRecta ecuacion1, EcuacionCircunferencia ecuacion2,
-			Coordenadas interseccionArcoOriginal) {
-			 JOptionPane.showMessageDialog(null, "Lo siento, la versión actual no permite generar el contorneado seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
-			return null;
-	}
-
-		/** Method to calculate the point of intersection between a  vertical line and a circumference.
-		 * @param ecuacion1 is the line's equation.
-		 * @param ecuacion2 is the circumference's equation.
-		 * @param elemento2 is the Arc's data.
-		 * @return a point.
-		 */
-		private static Coordenadas intersectarArcoConRectaVertical(
-			EcuacionRecta ecuacion1, EcuacionCircunferencia ecuacion2,
-			Coordenadas interseccionArcoOriginal) {
-		Coordenadas interseccion=new Coordenadas(0,0);
-		interseccion.x=-ecuacion1.C/ecuacion1.A;
-		System.out.println(ecuacion2.Radio+"*"+ecuacion2.Radio+"-Math.pow"+interseccion.x+"-"+ecuacion2.centroX);
-		double parametroAlCuadrado=(ecuacion2.Radio*ecuacion2.Radio-Math.pow(interseccion.x-ecuacion2.centroX,2));
-		double parametro=0;
-		if(Math.abs(parametroAlCuadrado)>0.0001){
-			parametro=Math.sqrt(parametroAlCuadrado);
-		}
-		double y1=ecuacion2.centroY+parametro;
-		double y2=ecuacion2.centroY-parametro;
-		interseccion.y=seleccionarPuntoY(ecuacion1,ecuacion2,y1,y2,interseccionArcoOriginal);
-		interseccion.x=(double) FormatoNumeros.formatearNumero(interseccion.x);
-		interseccion.y=(double) FormatoNumeros.formatearNumero(interseccion.y);
-		return interseccion;
-	}
-
-		/** Method to select an intersection point of two possibilities.
-		 * @param ecuacion2 is the circumference's equation
-		 * @param y1 is the first possibly intersection point calculated.
-		 * @param y2 is the second possibly intersection point calculated.
-		 * @param interseccionArcoOriginal is the original point of intersection between an arc and another entity.
-		 * @return a point.
-		 */
-		private static double seleccionarPuntoY(EcuacionRecta ecuacion1,
-				EcuacionCircunferencia ecuacion2, double y1, double y2,
-				Coordenadas interseccionArcoOriginal) {
-			double y=0;
-			double cumple1=ecuacion1.A*(-ecuacion1.B*y1/ecuacion1.A-ecuacion1.C/ecuacion1.A)+ecuacion1.B*y1+ecuacion1.C;
-			double cumple2=ecuacion1.A*(-ecuacion1.B*y2/ecuacion1.A-ecuacion1.C/ecuacion1.A)+ecuacion1.B*y2+ecuacion1.C;
-			if(cumple1==0){
-				y=y1;
-			}else{
-				if(cumple2==0){
-					y=y2;
-				}
-			}
-			return y;
-		}
-
-		/** Method to calculate the point of intersection between an horizontal line and a circumference.
-		 * @param ecuacion1 is the line's equation.
-		 * @param ecuacion2 is the circumference's equation.
-		 * @param elemento2 is the Arc's data.
-		 * @return a point.
-		 */
-		private static Coordenadas intersectarArcoConRectaHorizontal(
-			EcuacionRecta ecuacion1, EcuacionCircunferencia ecuacion2,
-			Coordenadas interseccionArcoOriginal) {
-		Coordenadas interseccion=new Coordenadas(0,0);
-		interseccion.y=-ecuacion1.C/ecuacion1.B;
-		double parametro=0;
-		if(Math.abs(ecuacion2.Radio*ecuacion2.Radio-Math.pow(interseccion.y-ecuacion2.centroY,2))>0.001){
-		parametro=Math.sqrt(ecuacion2.Radio*ecuacion2.Radio-Math.pow(interseccion.y-ecuacion2.centroY,2));
-		}
-		double x1=ecuacion2.centroX+parametro;
-		double x2=ecuacion2.centroX-parametro;
-		interseccion.x=seleccionarPuntoX(ecuacion2,x1,x2,interseccionArcoOriginal);
-		interseccion.x=(double) FormatoNumeros.formatearNumero(interseccion.x);
-		interseccion.y=(double) FormatoNumeros.formatearNumero(interseccion.y);
-		return interseccion;
-	}
-
-
-		/** Method to select an intersection point of two possibilities.
-		 * @param ecuacion2 is the circumference's equation
-		 * @param x1 is the first possibly intersection point calculated.
-		 * @param x2 is the second possibly intersection point calculated.
-		 * @param interseccionArcoOriginal is the original point of intersection between an arc and another entity.
-		 * @return a point.
-		 */
-		private static double seleccionarPuntoX(
-				EcuacionCircunferencia ecuacion2, double x1, double x2,
-				Coordenadas interseccionArcoOriginal) {
-			double x=0;
-			if(interseccionArcoOriginal.x<ecuacion2.centroX){
-				if(x1<ecuacion2.centroX){
-					x=x1;
-				}else{
-					x=x2;
-				}
-			}else{
-				if(x1>ecuacion2.centroX){
-					x=x1;
-				}else{
-					x=x2;
-				}
-			}
-			return x;
-		}
-
+	
 		/** Method to calculate the point of intersection between two circumferences.
 		 * @param ecuacion1 is the first circumference's equation.
 		 * @param ecuacion2 is the second circumference's equation.
