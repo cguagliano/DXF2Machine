@@ -196,38 +196,86 @@ public class compensacionContorno {
 	 * @return a point.
 	 */
 	public static Coordenadas intersectarArcoYRecta(EcuacionRecta ecuacion1,
-			EcuacionCircunferencia ecuacion2, DatosArcos elemento2) {
+			EcuacionCircunferencia ecuacion2, DatosArcos elemento2, double angulo) {
 		Coordenadas interseccion=new Coordenadas(0,0);
 		Coordenadas finArco=ColeccionFunciones.ObtenerCoordenadaFinEntidad(elemento2);
-		if(ecuacion1.A==0){
+/*		if(ecuacion1.A==0){
 			interseccion=intersectarArcoConRectaHorizontal(ecuacion1,ecuacion2,finArco);
 		}else if(ecuacion1.B==0){
 			interseccion=intersectarArcoConRectaVertical(ecuacion1,ecuacion2,finArco);
 		}else{
 			interseccion=intersectarRectaConArcoCasoGeneral(ecuacion1,ecuacion2,finArco);
+		}*/
+		boolean tangente=RectaEsTangenteAlArco(ecuacion1,ecuacion2);
+		if(tangente==true){
+			interseccion=calcularNuevoPuntoDeIntersección(ecuacion2,angulo);
+			return interseccion;
+		}else{
+			
+		return null;
 		}
-		return interseccion;
+	}
+
+	/**
+	 * Method to calculate the new intersection point between an arc and a tangent line.
+	 * @param ecuacion2 is the circumference's equation.
+	 * @param angulo is the arc's data.
+	 * @return the new point.
+	 */
+	private static Coordenadas calcularNuevoPuntoDeIntersección(
+			EcuacionCircunferencia ecuacion2, double angulo) {
+		double x,y;
+		x = ecuacion2.Radio * Math.cos(angulo * Math.PI / 180) + ecuacion2.centroX;
+		y = ecuacion2.Radio * Math.sin(angulo * Math.PI / 180) + ecuacion2.centroY;
+		x= FormatoNumeros.formatearNumero(x);
+		y= FormatoNumeros.formatearNumero(y);
+		Coordenadas interseccion=new Coordenadas(x,y);
+    	return interseccion;
+	}
+
+	/**
+	 * Method to calculate if a line is tangent to a given circumference.
+	 * @param ecuacion1 is the line's equation.
+	 * @param ecuacion2 is the circumference's equation
+	 * @return true if the line is tangent, false otherwise.
+	 */
+	private static boolean RectaEsTangenteAlArco(EcuacionRecta ecuacion1,
+			EcuacionCircunferencia ecuacion2) {
+		double distancia=Math.abs((ecuacion1.A*ecuacion2.centroX+ecuacion1.B*ecuacion2.centroY+ecuacion1.C)/Math.sqrt(Math.pow(ecuacion1.A, 2)+Math.pow(ecuacion1.B,2)));
+		if(Math.abs(distancia-ecuacion2.Radio)<0.001){
+			return true;
+		}else{
+			return false;	
+		}
 	}
 
 	/** Method to calculate the point of intersection between a line and a circumference.
 	 * @param ecuacion1 is the line's equation.
 	 * @param ecuacion2 is the circumference's equation.
 	 * @param elemento2 is the Arc's data.
+	 * @param angulo 
 	 * @return a point.
 	 */
 	public static Coordenadas intersectarRectaYArco(EcuacionRecta ecuacion1,
-	    EcuacionCircunferencia ecuacion2, DatosArcos elemento2) {
+	    EcuacionCircunferencia ecuacion2, DatosArcos elemento2, double angulo) {
 		Coordenadas interseccion=new Coordenadas(0,0);
 		Coordenadas inicioArco=ColeccionFunciones.ObtenerCoordenadaInicioEntidad(elemento2);
-		if(ecuacion1.A==0){
+	/*	if(ecuacion1.A==0){
 			interseccion=intersectarArcoConRectaHorizontal(ecuacion1,ecuacion2,inicioArco);
 		}else if(ecuacion1.B==0){
 			interseccion=intersectarArcoConRectaVertical(ecuacion1,ecuacion2,inicioArco);
 		}else{
 			interseccion=intersectarRectaConArcoCasoGeneral(ecuacion1,ecuacion2,inicioArco);
+		}*/
+		boolean tangente=RectaEsTangenteAlArco(ecuacion1,ecuacion2);
+		if(tangente==true){
+			interseccion=calcularNuevoPuntoDeIntersección(ecuacion2,angulo);
+			return interseccion;
+		}else{
+			 JOptionPane.showMessageDialog(null, "Lo siento, la versión actual no permite generar el contorneado seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
+			 return null;
 		}
-		return interseccion;
-		}
+}
 	
 	/** Method to calculate the point of intersection between a line and a circumference.
 	 * @param ecuacion1 is the line's equation.

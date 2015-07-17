@@ -29,7 +29,7 @@ public class FormatoNumeros {
 	 * @param numero is a number.
 	 * @return a number.
 	 */
-	public static Object formatearNumero(double numero){
+	public static double formatearNumero(double numero){
 		DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
 		simbolos.setDecimalSeparator('.');
 		DecimalFormat formateador = new DecimalFormat("#####.###",simbolos);
@@ -39,6 +39,6 @@ public class FormatoNumeros {
 		}catch(NumberFormatException ex){
 			 JOptionPane.showMessageDialog(null, "Imposible generar el mecanizado solicitado","Error" ,JOptionPane.ERROR_MESSAGE);
 			};
-		return null;
+		return 0;
 }
 }

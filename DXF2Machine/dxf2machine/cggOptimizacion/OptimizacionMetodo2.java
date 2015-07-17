@@ -82,13 +82,25 @@ public class OptimizacionMetodo2 extends Optimizacion {
 				interseccion=compensacionContorno.intersectarRectas((EcuacionRecta)ecuacion1,(EcuacionRecta)ecuacion2);
 				
 			}else{
-				interseccion=compensacionContorno.intersectarRectaYArco((EcuacionRecta)ecuacion1,(EcuacionCircunferencia)ecuacion2,(DatosArcos)elemento2);
+				double angulo;
+				if(elemento2.orientacion==0){
+					angulo=((DatosArcos)elemento2).AngI;
+				}else{
+					angulo=((DatosArcos)elemento2).AngF;
+				}
+				
+				interseccion=compensacionContorno.intersectarRectaYArco((EcuacionRecta)ecuacion1,(EcuacionCircunferencia)ecuacion2,(DatosArcos)elemento2,angulo);
 				
 			}
 		}else{
 			if(ecuacion2 instanceof EcuacionRecta){
-				
-				interseccion=compensacionContorno.intersectarArcoYRecta((EcuacionRecta)ecuacion2,(EcuacionCircunferencia)ecuacion1,(DatosArcos)elemento1);
+				double angulo;
+				if(elemento1.orientacion==0){
+					angulo=((DatosArcos)elemento1).AngF;
+				}else{
+					angulo=((DatosArcos)elemento1).AngI;
+				}
+				interseccion=compensacionContorno.intersectarArcoYRecta((EcuacionRecta)ecuacion2,(EcuacionCircunferencia)ecuacion1,(DatosArcos)elemento1,angulo);
 				}
 			else{
 				Coordenadas FinArco= ColeccionFunciones.ObtenerCoordenadaFinEntidad(elemento2);
